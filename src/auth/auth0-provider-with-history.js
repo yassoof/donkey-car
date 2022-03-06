@@ -16,7 +16,7 @@ const Auth0ProviderWithHistory = ({ children }) => {
     <Auth0Provider
       domain={domain}
       clientId={clientId}
-      redirectUri={window.location.pathname}
+      redirectUri={"https://yassoof.github.io/donkey-car"}
       onRedirectCallback={onRedirectCallback}
     >
       {children}
