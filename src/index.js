@@ -11,7 +11,7 @@ ReactDOM.render(
     <Router>
       <Auth0ProviderWithHistory>
         <App />
-      </Auth0ProviderWithHistory>F
+      </Auth0ProviderWithHistory>
     </Router>
   </React.StrictMode>,
   document.getElementById('root')
