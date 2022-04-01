@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/donkey-car/static/css/main.d217ab40.css",
-    "main.js": "/donkey-car/static/js/main.af233658.js",
+    "main.js": "/donkey-car/static/js/main.da15d3f0.js",
     "static/js/787.144779cf.chunk.js": "/donkey-car/static/js/787.144779cf.chunk.js",
     "static/media/DonkeyCarImage.png": "/donkey-car/static/media/DonkeyCarImage.f3707256188637b79517.png",
     "static/media/logo.svg": "/donkey-car/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/donkey-car/index.html",
     "main.d217ab40.css.map": "/donkey-car/static/css/main.d217ab40.css.map",
-    "main.af233658.js.map": "/donkey-car/static/js/main.af233658.js.map",
+    "main.da15d3f0.js.map": "/donkey-car/static/js/main.da15d3f0.js.map",
     "787.144779cf.chunk.js.map": "/donkey-car/static/js/787.144779cf.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.d217ab40.css",
-    "static/js/main.af233658.js"
+    "static/js/main.da15d3f0.js"
   ]
 }
