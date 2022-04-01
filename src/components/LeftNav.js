@@ -15,7 +15,7 @@ const LeftNav = (props) => {
         <FaBars />
       </button>
       <img className='navlogo' src={logo} alt='navbar logo' />
-      <NavLink className={[path].includes(props.path) ? 'nav-item active' : 'nav-item inactive'}
+      <NavLink className={props.path.includes(path) ? 'nav-item active' : 'nav-item inactive'}
         to={path}>
         Home
       </NavLink>
