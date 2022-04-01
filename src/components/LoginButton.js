@@ -5,9 +5,10 @@ const LoginButton = () => {
     const { isAuthenticated } = useAuth0();
 
     return isAuthenticated ? null : (
-        <a onClick={() => loginWithRedirect()} >
+        <button className='not-button nav-item'
+            onClick={() => loginWithRedirect({ redirect_uri: window.sessionStorage.getItem('url') })} >
             Log In
-        </a>
+        </button>
     );
 };
 

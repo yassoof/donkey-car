@@ -1,18 +1,24 @@
 import { FaBars } from 'react-icons/fa';
+import { NavLink } from 'react-router-dom';
 import logo from '../assets/DonkeyCarImage.png';
 
 const LeftNav = (props) => {
+  const path = '/donkey-car';
   return (
     <span className='leftbar'>
-      <a className='icon'
-        style={props.batonpass.showSNav ? 
-          { color: 'black', backgroundColor: '#ddd'} : 
-          null}
-        onClick={(e) => { props.batonpass.setShowSNav() }} >
+      <button className='icon not-button nav-item'
+        style={props.batonpass.showSNav ?
+          { color: 'black', backgroundColor: '#ddd' } :
+          null
+        }
+        onClick={() => { props.batonpass.setShowSNav() }} >
         <FaBars />
-      </a>
+      </button>
       <img className='navlogo' src={logo} alt='navbar logo' />
-      <a className='active'> Home </a>
+      <NavLink className={[path].includes(props.path) ? 'nav-item active' : 'nav-item inactive'}
+        to={path}>
+        Home
+      </NavLink>
     </span>
   )
 }

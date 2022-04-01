@@ -4,9 +4,10 @@ const LogoutButton = () => {
     const { logout } = useAuth0();
 
     return (
-        <a onClick={() => logout({ returnTo: "https://yassoof.github.io/donkey-car" })} >
+        <button className='not-button nav-item'
+            onClick={() => logout({ returnTo: window.sessionStorage.getItem('url') })} >
             Log Out
-        </a>
+        </button>
     );
 };
 
