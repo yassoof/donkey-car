@@ -6,12 +6,13 @@ const Home = () => {
         <div className='container'>
             <h1 className='pageTitle' > Donkey Car Project </h1>
             <iframe className='video'
-            title='Installation Video'
-            src='https://youtu.be/gUQTY7JQloM'
-            frameBorder='0'
-            allow='accelerometer; encrypted-media; gyroscope; picture-in-picture'
-            allowFullScreen
-            />
+                src="https://www.youtube.com/embed/gUQTY7JQloM"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+
+            </iframe>
         </div>
     )
 }
