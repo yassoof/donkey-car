@@ -16,10 +16,10 @@ const TestCaseModal = (props) => {
 
     useEffect(() => {
         clear();
-        if (!props.isNewCase && props.id !== 0 && props.id !== props.options.length + 1) {
-            setDesc(props.options[props.id - 1].description);
-            setPreCond(props.options[props.id - 1].preConditions);
-            setPostCond(props.options[props.id - 1].postConditions);
+        if (!props.isNewCase && props.index !== 0) {
+            setDesc(props.options[props.index - 1].description);
+            setPreCond(props.options[props.index - 1].preConditions);
+            setPostCond(props.options[props.index - 1].postConditions);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.show])
@@ -42,8 +42,8 @@ const TestCaseModal = (props) => {
     }
 
     const putData = () => {
-        if (props.id !== 0 && props.id <= props.options.length) {
-            axios.put(`${serverUrl}/${props.id}`, data)
+        if (props.index !== 0) {
+            axios.put(`${serverUrl}/${props.options[props.index - 1].id}`, data)
                 .then(res => {
                     console.log(res);
                     console.log(res.data);
@@ -83,20 +83,23 @@ const TestCaseModal = (props) => {
                 <button className='not-button closebutton' onClick={(e) => { e.preventDefault(); props.onClose(); }} > &times; </button>
 
                 {/* Id */}
-                <label className='modal-label' >Enter Test Case Id: </label>
-                <input className='number-field' type='number' value={!props.isNewCase ? props.id : props.options.length + 1} disabled />
+                <label className='modal-label' >Test Case Id: </label>
+                <input className='id-field' type='text'
+                    value={!props.isNewCase && props.index >= 1 ? props.options[props.index - 1].id : '???'} 
+                    disabled 
+                />
 
                 {/* Description */}
                 <label className='modal-label' >Enter Test Case Description:</label>
-                <textarea className='text-field' value={desc} disabled={!props.edit} onChange={(e) => setDesc(e.target.value)} />
+                <textarea className='text-field' required value={desc} disabled={!props.edit} onChange={(e) => setDesc(e.target.value)} />
 
                 {/* Pre-Conditions */}
                 <label className='modal-label' >Enter Test Case Pre-Conditions:</label>
-                <textarea className='text-field' value={preCond} disabled={!props.edit} onChange={(e) => setPreCond(e.target.value)} />
+                <textarea className='text-field' required value={preCond} disabled={!props.edit} onChange={(e) => setPreCond(e.target.value)} />
 
                 {/* Post-Conditions */}
                 <label className='modal-label' >Enter Test Case Post-Conditions:</label>
-                <textarea className='text-field' value={postCond} disabled={!props.edit} onChange={(e) => setPostCond(e.target.value)} />
+                <textarea className='text-field' required value={postCond} disabled={!props.edit} onChange={(e) => setPostCond(e.target.value)} />
 
                 {props.edit
                     ? <span>

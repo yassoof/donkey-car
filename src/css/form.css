@@ -27,13 +27,12 @@ select {
     cursor: pointer;
 }
 
-.number-field {
+.id-field {
     margin: auto;
     margin-bottom: 0.75em;
     background-color: #ddd;
     height: 1.25em;
-    width: 6em;
-    padding-left: 1em;
+    width: 6.5em;
     font-size: 0.8em;
     text-align: center;
 }
@@ -44,7 +43,7 @@ select {
     height: 3.8em;
     padding-left: 1em;
     font-size: 1em;
-    text-transform: capitalize;
+   /* text-transform: capitalize;*/
 }
 
 textarea {

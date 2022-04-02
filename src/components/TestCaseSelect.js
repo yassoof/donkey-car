@@ -10,14 +10,18 @@ const TestCaseSelect = (props) => {
     }
     function handleChange(e) {
         setTestCase(e.currentTarget.value);
-        props.returnId(e.currentTarget.value);
+        props.returnIndex(e.currentTarget.value);
     }
     return (
         <select required value={testCase} onChange={(e) => handleChange(e)}>
             <option key={0} value='' hidden > {props.options.length > 0 ? 'Select...' : 'No Test Cases Found.'} </option>
             {
                 props.options.map((item, _) => {
-                    return (<option key={item.id} value={item.id}> {`${item.id}: ${capitalize(item.description)}`} </option>)
+                    return (
+                        <option
+                            key={item.index} value={item.index}> {`${item.index}: ${capitalize(item.description)}`}
+                        </option>
+                    )
                 }, this)
             }
         </select>

@@ -12,7 +12,7 @@ import TestCaseSelect from '../components/TestCaseSelect';
 
 const TestCases = () => {
 
-  const [currentId, setCurrentId] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [device, setDevice] = useState('Select....');
   const [showModal, setShowModal] = useState(false);
   const [canEdit, setCanEdit] = useState(false);
@@ -26,6 +26,7 @@ const TestCases = () => {
       description: '',
       preConditions: '',
       postConditions: '',
+      index: 0,
     },
   ]);
 
@@ -44,7 +45,15 @@ const TestCases = () => {
 
   const getData = () => {
     axios.get(serverUrl).then(res => {
-      setTestCaseOptions(res.data);
+      setTestCaseOptions(res.data.map((item, i) => {
+        return {
+          id: item.id,
+          description: item.description,
+          preConditions: item.preConditions,
+          postConditions: item.postConditions,
+          index: i + 1,
+        }
+      }, this));
     })
   }
 
@@ -70,14 +79,14 @@ const TestCases = () => {
     setCanEdit(true);
   }, []);
 
-  const selectId = useCallback((selectedId) => {
-    setCurrentId(selectedId);
+  const selectIndex = useCallback((selectedIndex) => {
+    setCurrentIndex(selectedIndex);
   }, []);
 
   const deleteTestCase = () => {
-    if (currentId !== 0) {
-      axios.delete(`${serverUrl}/${currentId}`);
-      testCaseOptions.splice(currentId - 1, 1);
+    if (currentIndex !== 0) {
+      axios.delete(`${serverUrl}/${testCaseOptions[currentIndex - 1].id}`);
+      testCaseOptions.splice(currentIndex - 1, 1);
     }
   }
 
@@ -114,7 +123,7 @@ const TestCases = () => {
             <ReactTooltip id='delete' place="top" type="light" effect="solid"> Delete Selected Test Case </ReactTooltip>
 
           </label>
-          <TestCaseSelect options={testCaseOptions} returnId={selectId} />
+          <TestCaseSelect options={testCaseOptions} returnIndex={selectIndex} />
         </span>
 
         <span className='span' >
@@ -144,16 +153,18 @@ const TestCases = () => {
         <ReactTooltip id='run' place="bottom" type="light" effect="solid"> Run Test Case on Device </ReactTooltip>
       </form>
 
-
-      <TestCaseModal
-        id={currentId}
-        options={testCaseOptions}
-        isNewCase={newCase}
-        show={showModal}
-        edit={canEdit}
-        canEdit={edit}
-        onClose={close}
-      />
+      {testCaseOptions.length === 0 && !canEdit ?
+        null
+        : < TestCaseModal
+          index={currentIndex}
+          options={testCaseOptions}
+          isNewCase={newCase}
+          show={showModal}
+          edit={canEdit}
+          canEdit={edit}
+          onClose={close}
+        />
+      }
     </div>
   )
 }
