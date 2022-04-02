@@ -2,24 +2,61 @@ import React from 'react';
 import '../css/form.css';
 import { FaEdit } from 'react-icons/fa';
 import ReactTooltip from 'react-tooltip';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 
 const TestCaseModal = (props) => {
 
-    const [id, setId] = useState(0);
-    const [description, setDescription] = useState('');
-    const [preConditions, setPreConditions] = useState('');
-    const [postConditions, setPostConditions] = useState('');
+    const [desc, setDesc] = useState('');
+    const [preCond, setPreCond] = useState('');
+    const [postCond, setPostCond] = useState('');
 
-    function clear() {
-        setDescription('');
-        setPreConditions('');
-        setPostConditions('');
+    const serverUrl = 'http://localhost:8090/test-cases';
+
+    useEffect(() => {
+        clear();
+        if (!props.isNewCase && props.id !== 0 && props.id !== props.options.length + 1) {
+            setDesc(props.options[props.id - 1].description);
+            setPreCond(props.options[props.id - 1].preConditions);
+            setPostCond(props.options[props.id - 1].postConditions);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.show])
+
+
+    const data = {
+        description: desc,
+        preConditions: preCond,
+        postConditions: postCond,
     }
 
-    function formatResult() {
-        return description + ";" + preConditions + ";" + postConditions;
+    const postData = () => {
+        axios.post(serverUrl, data)
+            .then(res => {
+                console.log(res);
+                console.log(res.data);
+            }).catch(err => {
+                console.log(err);
+            });
+    }
+
+    const putData = () => {
+        if (props.id !== 0 && props.id <= props.options.length) {
+            axios.put(`${serverUrl}/${props.id}`, data)
+                .then(res => {
+                    console.log(res);
+                    console.log(res.data);
+                }).catch(err => {
+                    console.log(err);
+                });
+        }
+    }
+
+    function clear() {
+        setDesc('');
+        setPreCond('');
+        setPostCond('');
     }
 
     const rebuildToolTip = () => {
@@ -27,9 +64,12 @@ const TestCaseModal = (props) => {
     };
 
     const formHandler = (e) => {
-        let result = formatResult();
-        clear();
         e.preventDefault();
+        if (props.isNewCase) {
+            postData();
+        } else {
+            putData();
+        }
         props.onClose();
     }
 
@@ -40,15 +80,24 @@ const TestCaseModal = (props) => {
     return (
         <div className='modalpane'>
             <form className='modal' onLoad={() => { rebuildToolTip() }} onSubmit={(e) => formHandler(e)}>
-                <button className='not-button closebutton' onClick={(e) => { props.onClose(e); }} > &times; </button>
-                <label >Enter Test Case Id: </label>
-                <input type='number' value={id} disabled />
-                <label>Enter Test Case Description:</label>
-                <textarea value={description} disabled={!props.edit} onChange={(e) => setDescription(e.target.value)} />
-                <label>Enter Test Case Pre-Condition:</label>
-                <textarea value={preConditions} disabled={!props.edit} onChange={(e) => setPreConditions(e.target.value)} />
-                <label>Enter Test Case Post-Condition:</label>
-                <textarea value={postConditions} disabled={!props.edit} onChange={(e) => setPostConditions(e.target.value)} />
+                <button className='not-button closebutton' onClick={(e) => { e.preventDefault(); props.onClose(); }} > &times; </button>
+
+                {/* Id */}
+                <label className='modal-label' >Enter Test Case Id: </label>
+                <input className='number-field' type='number' value={!props.isNewCase ? props.id : props.options.length + 1} disabled />
+
+                {/* Description */}
+                <label className='modal-label' >Enter Test Case Description:</label>
+                <textarea className='text-field' value={desc} disabled={!props.edit} onChange={(e) => setDesc(e.target.value)} />
+
+                {/* Pre-Conditions */}
+                <label className='modal-label' >Enter Test Case Pre-Conditions:</label>
+                <textarea className='text-field' value={preCond} disabled={!props.edit} onChange={(e) => setPreCond(e.target.value)} />
+
+                {/* Post-Conditions */}
+                <label className='modal-label' >Enter Test Case Post-Conditions:</label>
+                <textarea className='text-field' value={postCond} disabled={!props.edit} onChange={(e) => setPostCond(e.target.value)} />
+
                 {props.edit
                     ? <span>
                         <button className='formButton button' type='submit' data-tip data-for='save' >
@@ -57,9 +106,9 @@ const TestCaseModal = (props) => {
                         <ReactTooltip id='save' place="bottom" type="light" effect="solid"> Save Test Case </ReactTooltip>
                     </span>
                     : <span>
-                        <button className='not-button' data-tip data-for='edit' 
-                        style={{ color: '#fad039', fontSize:'2em', margin:'1em auto 0 auto' }}
-                            onClick={(e) => { props.canEdit(e); }} >
+                        <button className='not-button' data-tip data-for='edit'
+                            style={{ color: '#fad039', fontSize: '2em', margin: '0.2em auto' }}
+                            onClick={(e) => { e.preventDefault(); props.canEdit(); }} >
                             <FaEdit />
                         </button>
                         <ReactTooltip id='edit' place="bottom" type="light" effect="solid"> Edit Selected Test Case </ReactTooltip>

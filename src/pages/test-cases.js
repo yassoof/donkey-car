@@ -6,20 +6,28 @@ import Loading from '../components/Loading'
 import { FaSyncAlt, FaEye, FaPlus, FaTrash } from 'react-icons/fa';
 import ReactTooltip from 'react-tooltip';
 import TestCaseModal from '../components/TestCaseModal';
+import axios from 'axios';
+import TestCaseSelect from '../components/TestCaseSelect';
 
 
 const TestCases = () => {
 
-  const [testCase, setTestCase] = useState('Select...');
+  const [currentId, setCurrentId] = useState(0);
   const [device, setDevice] = useState('Select....');
   const [showModal, setShowModal] = useState(false);
   const [canEdit, setCanEdit] = useState(false);
+  const [newCase, setNewCase] = useState(canEdit);
 
-  const testCaseOptions = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' }
-  ];
+  const serverUrl = 'http://localhost:8090/test-cases';
+
+  const [testCaseOptions, setTestCaseOptions] = useState([
+    {
+      id: 1,
+      description: '',
+      preConditions: '',
+      postConditions: '',
+    },
+  ]);
 
   const deviceOptions = [
     { value: 'strawberry', label: 'Strawberry' },
@@ -32,7 +40,18 @@ const TestCases = () => {
     } else {
       window.history.pushState(window.state, window.title, 'https://yassoof.github.io/#/donkey-car/test-cases');
     }
-  });
+  }, []);
+
+  const getData = () => {
+    axios.get(serverUrl).then(res => {
+      setTestCaseOptions(res.data);
+    })
+  }
+
+  useEffect(() => {
+    getData();
+  }, [testCaseOptions]);
+
 
   const rebuildToolTip = () => {
     ReactTooltip.rebuild();
@@ -42,16 +61,25 @@ const TestCases = () => {
     e.preventDefault();
   }
 
-  const close = useCallback((e) => {
+  const close = useCallback(() => {
     setShowModal(false);
     setCanEdit(false);
-    e.preventDefault();
   }, []);
 
-  const edit = useCallback((e) => {
+  const edit = useCallback(() => {
     setCanEdit(true);
-    e.preventDefault();
   }, []);
+
+  const selectId = useCallback((selectedId) => {
+    setCurrentId(selectedId);
+  }, []);
+
+  const deleteTestCase = () => {
+    if (currentId !== 0) {
+      axios.delete(`${serverUrl}/${currentId}`);
+      testCaseOptions.splice(currentId - 1, 1);
+    }
+  }
 
 
   return (
@@ -64,32 +92,29 @@ const TestCases = () => {
               Select Test Case:
             </span>
 
+            {/* View */}
             <button data-tip data-for='view' className='not-button' style={{ color: '#fad039' }}
-              onClick={() => { setShowModal(true); setCanEdit(false); }}>
+              onClick={() => { setShowModal(true); setCanEdit(false); setNewCase(false); }}>
               <FaEye />
             </button>
             <ReactTooltip id='view' place="top" type="light" effect="solid"> View Selected Test Case </ReactTooltip>
 
+            {/* Add */}
             <button data-tip data-for='add' className='not-button' style={{ color: '#4ac746' }}
-              onClick={() => { setShowModal(true); setCanEdit(true); }}>
+              onClick={() => { setShowModal(true); setCanEdit(true); setNewCase(true); }}>
               <FaPlus />
             </button>
             <ReactTooltip id='add' place="top" type="light" effect="solid"> Add New Test Case </ReactTooltip>
 
-            <button data-tip data-for='delete' className='not-button' style={{ color: '#8a2516' }} >
+            {/* Delete */}
+            <button data-tip data-for='delete' className='not-button' style={{ color: '#8a2516' }}
+              onClick={() => { deleteTestCase(); }} >
               <FaTrash />
             </button>
             <ReactTooltip id='delete' place="top" type="light" effect="solid"> Delete Selected Test Case </ReactTooltip>
 
           </label>
-
-          <select required value={testCase} onChange={(e) => setTestCase(e.target.value)}>
-            {
-              testCaseOptions.map((item, i) => {
-                return (<option key={i} value={item.value}> {item.label} </option>)
-              }, this)
-            }
-          </select>
+          <TestCaseSelect options={testCaseOptions} returnId={selectId} />
         </span>
 
         <span className='span' >
@@ -98,6 +123,7 @@ const TestCases = () => {
               Select Device:
             </span>
 
+            {/* Refresh */}
             <button data-tip data-for='refresh' className='not-button' style={{ color: '#3183e0' }} >
               <FaSyncAlt />
             </button>
@@ -107,7 +133,7 @@ const TestCases = () => {
           <select required value={device} onChange={(e) => setDevice(e.target.value)}>
             {
               deviceOptions.map((item, i) => {
-                return (<option key={i} value={item.value}> {item.label} </option>)
+                return (<option key={i} value={item.value}> {(item.label)} </option>)
               }, this)
             }
           </select>
@@ -119,7 +145,15 @@ const TestCases = () => {
       </form>
 
 
-      <TestCaseModal show={showModal} edit={canEdit} canEdit={edit} onClose={close} />
+      <TestCaseModal
+        id={currentId}
+        options={testCaseOptions}
+        isNewCase={newCase}
+        show={showModal}
+        edit={canEdit}
+        canEdit={edit}
+        onClose={close}
+      />
     </div>
   )
 }

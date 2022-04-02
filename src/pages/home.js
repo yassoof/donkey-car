@@ -10,7 +10,7 @@ const Home = () => {
         } else {
             window.history.pushState(window.state, window.title, 'https://yassoof.github.io/#/donkey-car');
         }
-    });
+    }, []);
 
     return (
         <div className='container'>
