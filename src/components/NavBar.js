@@ -5,11 +5,11 @@ import CenterNav from './CenterNav';
 import { useState, useEffect } from 'react';
 
 const NavBar = (props) => {
-    const [path, setPath] = useState(window.location.pathname);
+    const [path, setPath] = useState(window.location.hash);
     let tempPath = '';
 
     const normalizePath = () => {
-        tempPath = window.location.pathname;
+        tempPath = window.location.hash;
         if (tempPath.endsWith('/')) {
             tempPath = tempPath.slice(0, tempPath.length - 1);
             setPath(tempPath);
