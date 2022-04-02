@@ -6,9 +6,9 @@ const Home = () => {
 
     useEffect(() => {
         if (window.location.hostname === 'localhost') {
-            window.history.pushState(window.state, window.title, 'http://localhost:3000/donkey-car');
+            window.history.pushState(window.state, window.title, 'http://localhost:3000/#/donkey-car');
         } else {
-            window.history.pushState(window.state, window.title, 'https://yassoof.github.io/donkey-car');
+            window.history.pushState(window.state, window.title, 'https://yassoof.github.io/#/donkey-car');
         }
     });
 

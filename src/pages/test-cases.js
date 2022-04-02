@@ -28,9 +28,9 @@ const TestCases = () => {
 
   useEffect(() => {
     if (window.location.hostname === 'localhost') {
-      window.history.pushState(window.state, window.title, 'http://localhost:3000/donkey-car/test-cases');
+      window.history.pushState(window.state, window.title, 'http://localhost:3000/#/donkey-car/test-cases');
     } else {
-      window.history.pushState(window.state, window.title, 'https://yassoof.github.io/donkey-car/test-cases');
+      window.history.pushState(window.state, window.title, 'https://yassoof.github.io/#/donkey-car/test-cases');
     }
   });
 

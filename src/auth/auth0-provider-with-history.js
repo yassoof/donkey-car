@@ -13,7 +13,7 @@ const Auth0ProviderWithHistory = ({ children }) => {
 
 
   const onRedirectCallback = (appState) => {
-    navigate(appState?.returnTo || '/donkey-car');
+    navigate(appState?.returnTo || '/#/donkey-car');
   };
 
   return (
