@@ -5,13 +5,12 @@ const Auth0ProviderWithHistory = ({ children }) => {
   const domain = process.env.REACT_APP_AUTH0_DOMAIN;
   const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
 
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
 
-  if(window.sessionStorage.getItem('url') === null) {
+  if (window.sessionStorage.getItem('url') === null) {
     window.sessionStorage.setItem('url', window.location.href);
-      console.log(window.sessionStorage.getItem('url'));
   }
-  
+
 
   const onRedirectCallback = (appState) => {
     navigate(appState?.returnTo || '/donkey-car');

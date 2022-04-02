@@ -28,7 +28,6 @@ const TestCaseModal = (props) => {
 
     const formHandler = (e) => {
         let result = formatResult();
-        console.log(result);
         clear();
         e.preventDefault();
         props.onClose();
