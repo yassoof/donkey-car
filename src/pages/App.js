@@ -41,7 +41,6 @@ function App() {
       <SideNav showSNav={showSideNav} setShowSNav={sideNavHandler} />
       <Routes>
         <Route path={'/'} element={<Home />} />
-        <Route path={'/http://localhost:3000/donkey-car'} element={<Home />} />
         <Route path='/donkey-car' element={<Home />} />
         <Route path='/donkey-car/test-cases' element={<TestCases />} />
         <Route path='*' element={<LostPage />} />

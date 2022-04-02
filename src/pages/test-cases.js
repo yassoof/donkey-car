@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import '../css/form.css'
 import { withAuthenticationRequired } from '@auth0/auth0-react';
 import Loading from '../components/Loading'
@@ -26,6 +26,14 @@ const TestCases = () => {
     { value: 'vanilla', label: 'Vanilla' }
   ];
 
+  useEffect(() => {
+    if (window.location.hostname === 'localhost') {
+      window.history.pushState(window.state, window.title, 'http://localhost:3000/donkey-car/test-cases');
+    } else {
+      window.history.pushState(window.state, window.title, 'https://yassoof.github.io/donkey-car/test-cases');
+    }
+  });
+
   const rebuildToolTip = () => {
     ReactTooltip.rebuild();
   };
@@ -35,16 +43,16 @@ const TestCases = () => {
   }
 
   const close = useCallback((e) => {
-      setShowModal(false);
-      setCanEdit(false);
-      e.preventDefault();
-    }, []);
+    setShowModal(false);
+    setCanEdit(false);
+    e.preventDefault();
+  }, []);
 
-    const edit = useCallback((e) => {
-      setCanEdit(true);
-      e.preventDefault();
-    }, []);
-  
+  const edit = useCallback((e) => {
+    setCanEdit(true);
+    e.preventDefault();
+  }, []);
+
 
   return (
     <div>
@@ -57,7 +65,7 @@ const TestCases = () => {
             </span>
 
             <button data-tip data-for='view' className='not-button' style={{ color: '#fad039' }}
-              onClick={() => { setShowModal(true); setCanEdit(false);}}>
+              onClick={() => { setShowModal(true); setCanEdit(false); }}>
               <FaEye />
             </button>
             <ReactTooltip id='view' place="top" type="light" effect="solid"> View Selected Test Case </ReactTooltip>

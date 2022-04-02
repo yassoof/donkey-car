@@ -21,12 +21,10 @@
 }
 
 .video {
-  display: inline-block;
   height: 60vh;
   width: 50vw;
   min-height: 16em;
   min-width: 26em;
-  pointer-events: none;
   margin: 2.5em auto;
 }
 

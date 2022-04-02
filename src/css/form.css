@@ -64,11 +64,13 @@ textarea {
     border-style: double;
     z-index: 2; /* Stay on top */
     background-color: #17223a; 
+    position: relative;
 }
 
 .modalpane {
     background-color: rgba(0, 0, 0, 0.5); 
     position: fixed;    
+    overflow-y: scroll;
     top: 0;
     right: 0;
     bottom: 0;

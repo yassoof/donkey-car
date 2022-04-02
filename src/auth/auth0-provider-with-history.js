@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Auth0Provider } from '@auth0/auth0-react';
 
-const Auth0ProviderWithHistory = ({ children }, props) => {
+const Auth0ProviderWithHistory = ({ children }) => {
   const domain = process.env.REACT_APP_AUTH0_DOMAIN;
   const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
 
@@ -9,11 +9,12 @@ const Auth0ProviderWithHistory = ({ children }, props) => {
 
   if(window.sessionStorage.getItem('url') === null) {
     window.sessionStorage.setItem('url', window.location.href);
+      console.log(window.sessionStorage.getItem('url'));
   }
   
 
   const onRedirectCallback = (appState) => {
-    navigate(appState?.returnTo || window.sessionStorage.getItem('url'));
+    navigate(appState?.returnTo || '/donkey-car');
   };
 
   return (
