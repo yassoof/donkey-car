@@ -13,12 +13,12 @@ import TestCaseSelect from '../components/TestCaseSelect';
 const TestCases = () => {
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [device, setDevice] = useState('Select....');
+  const [device, setDevice] = useState('Select...');
   const [showModal, setShowModal] = useState(false);
   const [canEdit, setCanEdit] = useState(false);
   const [newCase, setNewCase] = useState(canEdit);
 
-  const serverUrl = 'http://localhost:8090/test-cases';
+  const serverUrl = 'https://donkey-car.herokuapp.com/test-cases';
 
   const [testCaseOptions, setTestCaseOptions] = useState([
     {
@@ -61,6 +61,16 @@ const TestCases = () => {
     getData();
   }, [testCaseOptions]);
 
+  const runData = () => {
+    if (currentIndex === 0) return;
+    axios.post(`${serverUrl}/${testCaseOptions[currentIndex - 1].id}/run`, {})
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+      }).catch(err => {
+        console.log(err);
+      });
+  }
 
   const rebuildToolTip = () => {
     ReactTooltip.rebuild();
@@ -68,6 +78,7 @@ const TestCases = () => {
 
   const runTestCase = (e) => {
     e.preventDefault();
+    runData();
   }
 
   const close = useCallback(() => {
@@ -84,10 +95,9 @@ const TestCases = () => {
   }, []);
 
   const deleteTestCase = () => {
-    if (currentIndex !== 0) {
-      axios.delete(`${serverUrl}/${testCaseOptions[currentIndex - 1].id}`);
-      testCaseOptions.splice(currentIndex - 1, 1);
-    }
+    if (currentIndex === 0) return;
+    axios.delete(`${serverUrl}/${testCaseOptions[currentIndex - 1].id}`);
+    testCaseOptions.splice(currentIndex - 1, 1);
   }
 
 
@@ -133,7 +143,8 @@ const TestCases = () => {
             </span>
 
             {/* Refresh */}
-            <button data-tip data-for='refresh' className='not-button' style={{ color: '#3183e0' }} >
+            <button data-tip data-for='refresh' className='not-button' style={{ color: '#3183e0' }}
+            onClick={(e) => { e.preventDefault(); getData(); }} >
               <FaSyncAlt />
             </button>
             <ReactTooltip id='refresh' place="top" type="light" effect="solid"> Refresh Device List </ReactTooltip>

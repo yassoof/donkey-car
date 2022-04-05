@@ -12,7 +12,7 @@ const TestCaseModal = (props) => {
     const [preCond, setPreCond] = useState('');
     const [postCond, setPostCond] = useState('');
 
-    const serverUrl = 'http://localhost:8090/test-cases';
+    const serverUrl = 'https://donkey-car.herokuapp.com/test-cases';
 
     useEffect(() => {
         clear();
@@ -42,15 +42,14 @@ const TestCaseModal = (props) => {
     }
 
     const putData = () => {
-        if (props.index !== 0) {
-            axios.put(`${serverUrl}/${props.options[props.index - 1].id}`, data)
-                .then(res => {
-                    console.log(res);
-                    console.log(res.data);
-                }).catch(err => {
-                    console.log(err);
-                });
-        }
+        if (props.index === 0) return;
+        axios.put(`${serverUrl}/${props.options[props.index - 1].id}`, data)
+            .then(res => {
+                console.log(res);
+                console.log(res.data);
+            }).catch(err => {
+                console.log(err);
+            });
     }
 
     function clear() {
@@ -73,9 +72,7 @@ const TestCaseModal = (props) => {
         props.onClose();
     }
 
-    if (!props.show) {
-        return null;
-    }
+    if (!props.show) return null;
 
     return (
         <div className='modalpane'>
@@ -85,8 +82,8 @@ const TestCaseModal = (props) => {
                 {/* Id */}
                 <label className='modal-label' >Test Case Id: </label>
                 <input className='id-field' type='text'
-                    value={!props.isNewCase && props.index >= 1 ? props.options[props.index - 1].id : '???'} 
-                    disabled 
+                    value={!props.isNewCase && props.index >= 1 ? props.options[props.index - 1].id : '???'}
+                    disabled
                 />
 
                 {/* Description */}
