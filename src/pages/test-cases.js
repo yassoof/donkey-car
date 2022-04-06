@@ -19,6 +19,7 @@ const TestCases = () => {
   const [newCase, setNewCase] = useState(canEdit);
 
   const serverUrl = 'https://donkey-car.herokuapp.com/test-cases';
+  const controller = new AbortController();
 
   const [testCaseOptions, setTestCaseOptions] = useState([
     {
@@ -36,15 +37,14 @@ const TestCases = () => {
   ];
 
   useEffect(() => {
-    if (window.location.hostname === 'localhost') {
+    if (window.location.hostname === 'localhost')
       window.history.pushState(window.state, window.title, 'http://localhost:3000/#/donkey-car/test-cases');
-    } else {
+    else
       window.history.pushState(window.state, window.title, 'https://yassoof.github.io/#/donkey-car/test-cases');
-    }
   }, []);
 
-  const getData = () => {
-    axios.get(serverUrl).then(res => {
+  function getData () {
+    axios.get(serverUrl, { signal: controller.signal }).then(res => {
       setTestCaseOptions(res.data.map((item, i) => {
         return {
           id: item.id,
@@ -54,29 +54,36 @@ const TestCases = () => {
           index: i + 1,
         }
       }, this));
-    })
+    }).catch(err => {
+      if (err.name === 'AbortError')
+        console.log('Successfully aborted.');
+      else
+        console.log(err);
+    });
   }
 
   useEffect(() => {
     getData();
+    return () => controller.abort();    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [testCaseOptions]);
 
-  const runData = () => {
+  function runData () {
     if (currentIndex === 0) return;
-    axios.post(`${serverUrl}/${testCaseOptions[currentIndex - 1].id}/run`, {})
+    axios.post(`${serverUrl}/${testCaseOptions[currentIndex - 1].id}/run`)
       .then(res => {
         console.log(res);
         console.log(res.data);
       }).catch(err => {
-        console.log(err);
+          console.log(err);
       });
   }
 
-  const rebuildToolTip = () => {
+  function rebuildToolTip() {
     ReactTooltip.rebuild();
   };
 
-  const runTestCase = (e) => {
+  function runTestCase(e){
     e.preventDefault();
     runData();
   }
@@ -94,12 +101,11 @@ const TestCases = () => {
     setCurrentIndex(selectedIndex);
   }, []);
 
-  const deleteTestCase = () => {
+  function deleteTestCase() {
     if (currentIndex === 0) return;
     axios.delete(`${serverUrl}/${testCaseOptions[currentIndex - 1].id}`);
     testCaseOptions.splice(currentIndex - 1, 1);
   }
-
 
   return (
     <div>
@@ -113,21 +119,21 @@ const TestCases = () => {
 
             {/* View */}
             <button data-tip data-for='view' className='not-button' style={{ color: '#fad039' }}
-              onClick={() => { setShowModal(true); setCanEdit(false); setNewCase(false); }}>
+              onClick={(e) => { e.preventDefault(); setShowModal(true); setCanEdit(false); setNewCase(false); }}>
               <FaEye />
             </button>
             <ReactTooltip id='view' place="top" type="light" effect="solid"> View Selected Test Case </ReactTooltip>
 
             {/* Add */}
             <button data-tip data-for='add' className='not-button' style={{ color: '#4ac746' }}
-              onClick={() => { setShowModal(true); setCanEdit(true); setNewCase(true); }}>
+              onClick={(e) => { e.preventDefault(); setShowModal(true); setCanEdit(true); setNewCase(true); }}>
               <FaPlus />
             </button>
             <ReactTooltip id='add' place="top" type="light" effect="solid"> Add New Test Case </ReactTooltip>
 
             {/* Delete */}
             <button data-tip data-for='delete' className='not-button' style={{ color: '#8a2516' }}
-              onClick={() => { deleteTestCase(); }} >
+              onClick={(e) => { e.preventDefault(); deleteTestCase(); }} >
               <FaTrash />
             </button>
             <ReactTooltip id='delete' place="top" type="light" effect="solid"> Delete Selected Test Case </ReactTooltip>
@@ -144,7 +150,7 @@ const TestCases = () => {
 
             {/* Refresh */}
             <button data-tip data-for='refresh' className='not-button' style={{ color: '#3183e0' }}
-            onClick={(e) => { e.preventDefault(); getData(); }} >
+              onClick={(e) => { e.preventDefault(); getData(); }} >
               <FaSyncAlt />
             </button>
             <ReactTooltip id='refresh' place="top" type="light" effect="solid"> Refresh Device List </ReactTooltip>

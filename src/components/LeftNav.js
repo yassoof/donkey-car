@@ -4,6 +4,7 @@ import logo from '../assets/DonkeyCarImage.png';
 
 const LeftNav = (props) => {
   const path = '/donkey-car';
+    
   return (
     <span className='leftbar'>
       <button className='icon not-button nav-item'
@@ -15,7 +16,8 @@ const LeftNav = (props) => {
         <FaBars />
       </button>
       <img className='navlogo' src={logo} alt='navbar logo' />
-      <NavLink className={[`#${path}`].includes(props.path) || !props.path ? 'nav-item active' : 'nav-item inactive'}
+      <NavLink className={[`#${path}`].includes(props.path)
+        ? 'nav-item active' : 'nav-item inactive'}
         to={path}>
         Home
       </NavLink>

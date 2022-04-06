@@ -15,15 +15,14 @@ const TestCaseModal = (props) => {
     const serverUrl = 'https://donkey-car.herokuapp.com/test-cases';
 
     useEffect(() => {
-        clear();
         if (!props.isNewCase && props.index !== 0) {
             setDesc(props.options[props.index - 1].description);
             setPreCond(props.options[props.index - 1].preConditions);
             setPostCond(props.options[props.index - 1].postConditions);
         }
+        return () => clear();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.show])
-
 
     const data = {
         description: desc,
@@ -31,7 +30,7 @@ const TestCaseModal = (props) => {
         postConditions: postCond,
     }
 
-    const postData = () => {
+    function postData() {
         axios.post(serverUrl, data)
             .then(res => {
                 console.log(res);
@@ -41,7 +40,7 @@ const TestCaseModal = (props) => {
             });
     }
 
-    const putData = () => {
+    function putData() {
         if (props.index === 0) return;
         axios.put(`${serverUrl}/${props.options[props.index - 1].id}`, data)
             .then(res => {
@@ -58,17 +57,16 @@ const TestCaseModal = (props) => {
         setPostCond('');
     }
 
-    const rebuildToolTip = () => {
+    function rebuildToolTip() {
         ReactTooltip.rebuild();
     };
 
-    const formHandler = (e) => {
+    function formHandler(e) {
         e.preventDefault();
-        if (props.isNewCase) {
+        if (props.isNewCase)
             postData();
-        } else {
+        else
             putData();
-        }
         props.onClose();
     }
 

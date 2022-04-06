@@ -1,7 +1,7 @@
 {
   "homepage": "http://yassoof.github.io/donkey-car",
   "name": "donkey-car",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "private": true,
   "dependencies": {
     "@auth0/auth0-react": "^1.9.0",

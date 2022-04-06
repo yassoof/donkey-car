@@ -5,11 +5,10 @@ import '../css/App.css';
 const Home = () => {
 
     useEffect(() => {
-        if (window.location.hostname === 'localhost') {
+        if (window.location.hostname === 'localhost')
             window.history.pushState(window.state, window.title, 'http://localhost:3000/#/donkey-car');
-        } else {
+        else
             window.history.pushState(window.state, window.title, 'https://yassoof.github.io/#/donkey-car');
-        }
     }, []);
 
     return (

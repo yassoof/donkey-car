@@ -8,7 +8,8 @@ const CenterNav = (props) => {
 
   return isAuthenticated ? (
     <span className='centerbar'>
-      <NavLink className={[`#${path}`].includes(props.path) ? 'nav-item active' : 'nav-item inactive'}
+      <NavLink className={[`#${path}`].includes(props.path) ?
+        'nav-item active' : 'nav-item inactive'}
         to={path}>
         Test Cases
       </NavLink>

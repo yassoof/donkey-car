@@ -2,30 +2,22 @@ import './css/NavBar.css';
 import LeftNav from './LeftNav';
 import RightNav from './RightNav';
 import CenterNav from './CenterNav';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 const NavBar = (props) => {
     const [path, setPath] = useState(window.location.hash);
     let tempPath = '';
 
-    const normalizePath = () => {
+    function pathHandler() {
         tempPath = window.location.hash;
-        if (tempPath.endsWith('/')) {
+        if (tempPath.endsWith('/'))
             tempPath = tempPath.slice(0, tempPath.length - 1);
+        if (path !== tempPath)
             setPath(tempPath);
-        }
-        setPath(tempPath);
     }
 
-    useEffect(() => {
-        return () => {
-            normalizePath();
-        }
-    })
-
-
     return (
-        <div className='topnav' onLoad={() => setPath(true)} onClick={() => normalizePath()}>
+        <div className='topnav' onLoad={() => pathHandler()} onClick={() => pathHandler()}>
             <LeftNav batonpass={props} path={path} />
             <CenterNav path={path} />
             <RightNav />
