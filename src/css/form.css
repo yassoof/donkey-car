@@ -1,0 +1,103 @@
+
+form {
+    display: grid;
+    width: 18em;
+    text-align: center;
+    margin: 2em auto;
+    padding: 2em;
+    font-size: 1.25em;
+    border-style: double;
+}
+
+form .formButton {
+    margin: 1em auto 0.8em;
+    width: 6em;
+    height: 2em;
+    font-size: 0.85em;
+    font-weight: 500;
+}
+
+select {
+    margin-top: 0.75em;
+    background-color: #ddd;
+    width: 85%;
+    height: 2em;
+    padding-left: 1em;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.id-field {
+    margin: auto;
+    margin-bottom: 0.75em;
+    background-color: #ddd;
+    height: 1.25em;
+    width: 6.5em;
+    font-size: 0.8em;
+    text-align: center;
+}
+
+.text-field {
+    margin-bottom: 1em;
+    background-color: #ddd;
+    height: 3.8em;
+    padding-left: 1em;
+    font-size: 1em;
+   /* text-transform: capitalize;*/
+}
+
+textarea {
+    resize: none;
+}
+
+label {
+    height: 2.3em;
+    width: 100%;
+    color: whitesmoke;
+    font-size: 1.15em;
+    font-weight: 500;
+}
+
+.modal-label {
+    height: 2em;
+    font-size: 1em;
+}
+
+.span {
+    width: 100;
+    border-style: ridge;
+    margin-bottom: 1em;
+    padding-top: 1em; 
+    height: 6em;
+}
+
+.closebutton {
+    text-align: right;
+    color: whitesmoke;
+    font-size: 2em; 
+}
+
+/* Test Case Modal */
+.modal {
+    display: grid;
+    width: 18em;
+    text-align: center;
+    margin: 5vh auto;
+    padding: 0.1em 2em 0.8em;
+    font-size: 1.25em;
+    border-style: double;
+    z-index: 2; /* Stay on top */
+    background-color: #17223a; 
+    position: relative;
+}
+
+.modalpane {
+    background-color: rgba(0, 0, 0, 0.5); 
+    position: fixed;    
+    overflow-y: scroll;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+}

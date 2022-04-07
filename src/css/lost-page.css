@@ -1,0 +1,44 @@
+
+.lost_pane {
+    background-color: rgba(0, 0, 0, 0.5); 
+    position: fixed;    
+    top: 3.5em;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    cursor: not-allowed;
+}
+
+.text_pane {
+    margin: 4em auto;
+    width: max-content;
+}
+
+.sub_text_pane {
+    margin: 1em auto;
+    width: max-content;
+}
+
+.main_text {
+    text-align: center;   
+    font-size: 4em;    
+    font-weight: 700;
+    font-style: normal;
+}
+
+.sub_text {
+    color: rgb(226, 237, 248);
+    text-align: left;
+    font-size: 1.8em;
+    font-style: italic;
+    font-weight: 500;
+}
+
+.error_code {
+    color: rgb(180, 50, 50);
+}
+
+.error_description {
+    color: rgb(207, 207, 172);
+}

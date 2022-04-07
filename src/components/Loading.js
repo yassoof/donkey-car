@@ -1,25 +1,33 @@
-import logo from '../logo.svg';
-import '../App.css'
-import { useEffect, useState } from 'react';
+import logo from "../svg/logo.svg";
+import "../css/App.css";
+import React from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 
 const Loading = () => {
-  const [loadingText, setLoadingText] = useState('Loading...');
-  const loadingTextCycle = ['Loading.', 'Loading..', 'Loading...'];
-  let x = 0;
+  const loadingTextCycle = useMemo(
+    () => ["Loading.", "Loading..", "Loading..."],
+    []
+  );
+  const [loadingText, setLoadingText] = useState(loadingTextCycle[0]);
+  const x = useRef(0);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setLoadingText(loadingTextCycle[++x % 3]);
-    }, 500);
-    return () => clearInterval(interval);
-  }, []);
+  useEffect(
+    () => {
+      const interval = setInterval(() => {
+        x.current = (x.current + 1) % 3;
+        setLoadingText(loadingTextCycle[x.current]);
+      }, 500);
+      return () => clearInterval(interval);
+    },
+    [loadingTextCycle]
+  );
 
   return (
-    <span>
-      <img className='App-logo' src={logo} alt="loading..." />
-      <h2 className='loadingText' > {loadingText} </h2>
-    </span>
-  )
-}
+    <div className="loadingpane">
+      <img className="App-logo" src={logo} alt="loading..." />
+      <h2 className="loadingText"> {loadingText} </h2>
+    </div>
+  );
+};
 
-export default Loading
+export default Loading;
