@@ -11,16 +11,13 @@ const Loading = () => {
   const [loadingText, setLoadingText] = useState(loadingTextCycle[0]);
   const x = useRef(0);
 
-  useEffect(
-    () => {
-      const interval = setInterval(() => {
-        x.current = (x.current + 1) % 3;
-        setLoadingText(loadingTextCycle[x.current]);
-      }, 500);
-      return () => clearInterval(interval);
-    },
-    [loadingTextCycle]
-  );
+  useEffect(() => {
+    const interval = setInterval(() => {
+      x.current = (x.current + 1) % 3;
+      setLoadingText(loadingTextCycle[x.current]);
+    }, 500);
+    return () => clearInterval(interval);
+  }, [loadingTextCycle]);
 
   return (
     <div className="loadingpane">

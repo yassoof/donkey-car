@@ -25,12 +25,9 @@ function App() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const sideNavHandler = useCallback(
-    () => {
-      setShowSideNav(!showSideNav);
-    },
-    [showSideNav]
-  );
+  const sideNavHandler = useCallback(() => {
+    setShowSideNav(!showSideNav);
+  }, [showSideNav]);
 
   const { isLoading } = useAuth0();
   if (isLoading) {

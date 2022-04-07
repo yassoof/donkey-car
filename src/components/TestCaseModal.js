@@ -31,17 +31,14 @@ const TestCaseModal = props => {
 
   const serverUrl = "https://donkey-car.herokuapp.com/test-cases";
 
-  useEffect(
-    () => {
-      if (!props.isNewCase && props.index !== 0) {
-        setDesc(props.options[props.index - 1].description);
-        setPreCond(props.options[props.index - 1].preConditions);
-        setPostCond(props.options[props.index - 1].postConditions);
-      }
-      return () => clear();
-    },
-    [props.show]
-  );
+  useEffect(() => {
+    if (!props.isNewCase && props.index !== 0) {
+      setDesc(props.options[props.index - 1].description);
+      setPreCond(props.options[props.index - 1].preConditions);
+      setPostCond(props.options[props.index - 1].postConditions);
+    }
+    return () => clear();
+  }, [props.show]);
 
   const data = {
     description: desc,
