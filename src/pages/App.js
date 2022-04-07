@@ -1,16 +1,16 @@
-import '../css/App.css';
-import NavBar from '../components/NavBar';
-import SideNav from '../components/SideNav';
-import { useState, useEffect, useCallback } from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
-import Loading from '../components/Loading';
-import { Route, Routes } from 'react-router-dom';
-import Home from './home';
-import TestCases from './test-cases';
-import LostPage from './lost-page';
+import "../css/App.css";
+import NavBar from "../components/NavBar";
+import SideNav from "../components/SideNav";
+import { useState, useEffect, useCallback } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
+import Loading from "../components/Loading";
+import { Route, Routes } from "react-router-dom";
+import Home from "./home";
+import TestCases from "./test-cases";
+import LostPage from "./lost-page";
+import React from "react";
 
 function App() {
-
   const [showSideNav, setShowSideNav] = useState(false);
 
   useEffect(() => {
@@ -18,21 +18,23 @@ function App() {
       if (window.innerWidth > 768) {
         setShowSideNav(false);
       }
-    }
+    };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
     handleResize();
-    return () => window.removeEventListener('resize', handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const sideNavHandler = useCallback(() => {
-    setShowSideNav(!showSideNav);
-  }, [showSideNav]);
-
+  const sideNavHandler = useCallback(
+    () => {
+      setShowSideNav(!showSideNav);
+    },
+    [showSideNav]
+  );
 
   const { isLoading } = useAuth0();
   if (isLoading) {
-    return <Loading />
+    return <Loading />;
   }
 
   return (
@@ -40,10 +42,10 @@ function App() {
       <NavBar showSNav={showSideNav} setShowSNav={sideNavHandler} />
       <SideNav showSNav={showSideNav} setShowSNav={sideNavHandler} />
       <Routes>
-        <Route path={'/'} element={<Home />} />
-        <Route path='/donkey-car' element={<Home />} />
-        <Route path='/donkey-car/test-cases' element={<TestCases />} />
-        <Route path='*' element={<LostPage />} />
+        <Route path={"/"} element={<Home />} />
+        <Route path="/donkey-car" element={<Home />} />
+        <Route path="/donkey-car/test-cases" element={<TestCases />} />
+        <Route path="*" element={<LostPage />} />
       </Routes>
     </div>
   );

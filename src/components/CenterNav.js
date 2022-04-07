@@ -1,20 +1,30 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { NavLink } from "react-router-dom"
+import { NavLink } from "react-router-dom";
+import React from "react";
+import PropTypes from "prop-types";
 
-const CenterNav = (props) => {
+const CenterNav = props => {
+  CenterNav.propTypes = {
+    path: PropTypes.string.isRequired
+  };
 
   const { isAuthenticated } = useAuth0();
-  const path = '/donkey-car/test-cases';
+  const path = "/donkey-car/test-cases";
 
   return isAuthenticated ? (
-    <span className='centerbar'>
-      <NavLink className={[`${path}`].includes(props.path) ?
-        'nav-item active' : 'nav-item inactive'}
-        to={path}>
+    <span className="centerbar">
+      <NavLink
+        className={
+          [`${path}`].includes(props.path)
+            ? "nav-item active"
+            : "nav-item inactive"
+        }
+        to={path}
+      >
         Test Cases
       </NavLink>
     </span>
-  ) : null
-}
+  ) : null;
+};
 
-export default CenterNav
+export default CenterNav;
