@@ -45,7 +45,7 @@ const TestCases = () => {
       window.history.pushState(
         window.state,
         window.title,
-        "https://yassoof.github.io/donkey-car/test-cases"
+        "https://donkeycar.herokuapp.com/donkey-car/test-cases"
       );
   }, []);
 

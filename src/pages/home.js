@@ -14,7 +14,7 @@ const Home = () => {
       window.history.pushState(
         window.state,
         window.title,
-        "https://yassoof.github.io/donkey-car"
+        "https://donkeycar.herokuapp.com/donkey-car"
       );
   }, []);
 
