@@ -117,6 +117,12 @@ const TestCases = () => {
     testCaseOptions.splice(currentIndex - 1, 1);
   }
 
+  function emptyList() {
+    let x = !testCaseOptions.length && !canEdit;
+    let y = testCaseOptions.length === 1 && !currentIndex && !canEdit;
+    return x || y;
+  }
+
   return (
     <div>
       <form
@@ -246,7 +252,7 @@ const TestCases = () => {
         </ReactTooltip>
       </form>
 
-      {testCaseOptions.length === 0 && !canEdit ? null : (
+      {emptyList() ? null : (
         <TestCaseModal
           index={currentIndex}
           options={testCaseOptions}
