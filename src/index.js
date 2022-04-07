@@ -8,7 +8,7 @@ import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
+    <Router basename="/donkey-car">
       <Auth0ProviderWithHistory>
         <App />
       </Auth0ProviderWithHistory>

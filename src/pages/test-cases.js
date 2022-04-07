@@ -71,13 +71,10 @@ const TestCases = () => {
       });
   }
 
-  useEffect(
-    () => {
-      getData();
-      return () => controller.abort();
-    },
-    [testCaseOptions]
-  );
+  useEffect(() => {
+    getData();
+    return () => controller.abort();
+  }, [testCaseOptions]);
 
   function runData() {
     if (currentIndex === 0) return;
