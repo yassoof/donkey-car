@@ -30,8 +30,8 @@ const TestCases = () => {
   ]);
 
   const deviceOptions = [
-    { value: "strawberry", label: "Lorem Ipsum" },
-    { value: "vanilla", label: "Lorem Ipsum" }
+    { value: "lorem ipsum", label: "Lorem Ipsum" },
+    { value: "lorem ipsum", label: "Lorem Ipsum" }
   ];
 
   useEffect(() => {
