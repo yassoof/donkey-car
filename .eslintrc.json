@@ -23,7 +23,7 @@
             2
         ],
         "linebreak-style": [
-            "warning",
+            "warn",
             "windows"
         ],
         "quotes": [
