@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 
 const TestCaseSelect = props => {
   TestCaseSelect.propTypes = {
+    reference: PropTypes.any,
     returnIndex: PropTypes.func.isRequired,
     options: PropTypes.arrayOf(
       PropTypes.shape({

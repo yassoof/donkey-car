@@ -81,8 +81,8 @@ const TestCaseModal = props => {
     ReactTooltip.rebuild();
   }
 
-  function formHandler() {
-    // e.preventDefault();
+  function formHandler(e) {
+    e.preventDefault();
     if (props.isNewCase) postData();
     else putData();
     props.canClose();
