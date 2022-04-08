@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 const CenterNav = props => {
   CenterNav.propTypes = {
-    path: PropTypes.string.isRequired
+    path: PropTypes.oneOfType([PropTypes.string, PropTypes.any])
   };
 
   const { isAuthenticated } = useAuth0();

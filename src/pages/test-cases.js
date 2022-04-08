@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import "../css/form.css";
 import { withAuthenticationRequired } from "@auth0/auth0-react";
 import Loading from "../components/Loading";
@@ -19,10 +19,10 @@ const TestCases = () => {
   const serverUrl = "https://donkey-car.herokuapp.com/test-cases";
   const controller = new AbortController();
 
-  const [testCaseOptions, setTestCaseOptions] = useState([
+  const testCaseOptions = useRef([
     {
       id: 1,
-      description: "",
+      description: "lorem ipsum",
       preConditions: "",
       postConditions: "",
       index: 0
@@ -30,8 +30,8 @@ const TestCases = () => {
   ]);
 
   const deviceOptions = [
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" }
+    { value: "strawberry", label: "Lorem Ipsum" },
+    { value: "vanilla", label: "Lorem Ipsum" }
   ];
 
   useEffect(() => {
@@ -53,17 +53,17 @@ const TestCases = () => {
     axios
       .get(serverUrl, { signal: controller.signal })
       .then(res => {
-        setTestCaseOptions(
-          res.data.map((item, i) => {
-            return {
-              id: item.id,
-              description: item.description,
-              preConditions: item.preConditions,
-              postConditions: item.postConditions,
-              index: i + 1
-            };
-          }, this)
-        );
+        testCaseOptions.current = res.data.map((item, i) => {
+          if (Object.keys(item).length === 0) return;
+          console.log(res.data);
+          return {
+            id: item.id,
+            description: item.description,
+            preConditions: item.preConditions,
+            postConditions: item.postConditions,
+            index: i + 1
+          };
+        }, this);
       })
       .catch(err => {
         if (err.name === "AbortError") console.log("Successfully aborted.");
@@ -79,7 +79,7 @@ const TestCases = () => {
   function runData() {
     if (currentIndex === 0) return;
     axios
-      .post(`${serverUrl}/${testCaseOptions[currentIndex - 1].id}/run`)
+      .post(`${serverUrl}/${testCaseOptions.current[currentIndex - 1].id}/run`)
       .then(res => {
         console.log(res);
         console.log(res.data);
@@ -112,14 +112,16 @@ const TestCases = () => {
   }, []);
 
   function deleteTestCase() {
-    if (currentIndex === 0) return;
-    axios.delete(`${serverUrl}/${testCaseOptions[currentIndex - 1].id}`);
-    testCaseOptions.splice(currentIndex - 1, 1);
+    if (currentIndex == 0 || testCaseOptions.current.length === 0) return;
+    axios.delete(
+      `${serverUrl}/${testCaseOptions.current[currentIndex - 1].id}`
+    );
+    testCaseOptions.current.splice(currentIndex - 1, 1);
   }
 
   function emptyList() {
-    let x = !testCaseOptions.length && !canEdit;
-    let y = testCaseOptions.length === 1 && !currentIndex && !canEdit;
+    let x = !testCaseOptions.current.length && !canEdit;
+    let y = testCaseOptions.current.length === 1 && !currentIndex && !canEdit;
     return x || y;
   }
 
@@ -146,7 +148,11 @@ const TestCases = () => {
               style={{ color: "#fad039" }}
               onClick={e => {
                 e.preventDefault();
-                setShowModal(true && currentIndex && testCaseOptions.length);
+                setShowModal(
+                  true &&
+                    currentIndex != 0 &&
+                    testCaseOptions.current.length > 0
+                );
                 setCanEdit(false);
                 setNewCase(false);
               }}
@@ -196,7 +202,10 @@ const TestCases = () => {
               Delete Selected Test Case{" "}
             </ReactTooltip>
           </label>
-          <TestCaseSelect options={testCaseOptions} returnIndex={selectIndex} />
+          <TestCaseSelect
+            options={testCaseOptions.current}
+            returnIndex={selectIndex}
+          />
         </span>
 
         <span className="span">
@@ -255,7 +264,7 @@ const TestCases = () => {
       {emptyList() ? null : (
         <TestCaseModal
           index={currentIndex}
-          options={testCaseOptions}
+          options={testCaseOptions.current}
           isNewCase={newCase}
           show={showModal}
           edit={canEdit}

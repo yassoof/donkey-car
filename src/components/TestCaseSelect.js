@@ -15,15 +15,14 @@ const TestCaseSelect = props => {
       }).isRequired
     ).isRequired
   };
+
   const [testCase, setTestCase] = useState("Select...");
-  function capitalize(string) {
-    if (string) return string.charAt(0).toUpperCase() + string.slice(1);
-    else return "Default";
-  }
+
   function handleChange(e) {
-    setTestCase(e.currentTarget.value);
-    props.returnIndex(e.currentTarget.value);
+    setTestCase(e.target.value);
+    props.returnIndex(e.target.value);
   }
+
   return (
     <select required value={testCase} onChange={e => handleChange(e)}>
       <option key={0} value="" hidden>
@@ -34,7 +33,7 @@ const TestCaseSelect = props => {
         return (
           <option key={item.index} value={item.index}>
             {" "}
-            {`${item.index}: ${capitalize(item.description)}`}
+            {`${item.index}: ${item.description}`}
           </option>
         );
       }, this)}

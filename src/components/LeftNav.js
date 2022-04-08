@@ -2,14 +2,14 @@ import { FaBars } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import logo from "../assets/DonkeyCarImage.png";
 import React from "react";
-import Proptypes from "prop-types";
+import PropTypes from "prop-types";
 
 const LeftNav = props => {
   LeftNav.propTypes = {
-    path: Proptypes.string.isRequired,
-    batonpass: Proptypes.shape({
-      showSNav: Proptypes.bool.isRequired,
-      setShowSNav: Proptypes.func.isRequired
+    path: PropTypes.string.isRequired,
+    batonpass: PropTypes.shape({
+      showSNav: PropTypes.bool.isRequired,
+      setShowSNav: PropTypes.func.isRequired
     }).isRequired
   };
   const path = "/donkey-car";

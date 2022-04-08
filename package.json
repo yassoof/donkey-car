@@ -1,5 +1,5 @@
 {
-  "homepage": "https://donkeycar.herokuapp.com",
+  "homepage": "https://donkeycar.herokuapp.com/",
   "name": "donkey-car",
   "version": "0.3.6",
   "engines": {

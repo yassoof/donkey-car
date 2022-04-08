@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 
 const TestCaseModal = props => {
   TestCaseModal.propTypes = {
-    index: PropTypes.number.isRequired,
+    index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
     options: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.number,
@@ -32,7 +32,7 @@ const TestCaseModal = props => {
   const serverUrl = "https://donkey-car.herokuapp.com/test-cases";
 
   useEffect(() => {
-    if (!props.isNewCase && props.index !== 0) {
+    if (props.show && !props.isNewCase && props.index != 0) {
       setDesc(props.options[props.index - 1].description);
       setPreCond(props.options[props.index - 1].preConditions);
       setPostCond(props.options[props.index - 1].postConditions);
@@ -81,8 +81,8 @@ const TestCaseModal = props => {
     ReactTooltip.rebuild();
   }
 
-  function formHandler(e) {
-    e.preventDefault();
+  function formHandler() {
+    // e.preventDefault();
     if (props.isNewCase) postData();
     else putData();
     props.canClose();
