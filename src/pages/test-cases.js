@@ -25,13 +25,13 @@ const TestCases = () => {
       description: "lorem ipsum",
       preConditions: "",
       postConditions: "",
-      index: 0
-    }
+      index: 0,
+    },
   ]);
 
   const deviceOptions = [
     { value: "lorem ipsum", label: "lorem ipsum" },
-    { value: "lorem ipsum", label: "lorem ipsum" }
+    { value: "lorem ipsum", label: "lorem ipsum" },
   ];
 
   useEffect(() => {
@@ -52,7 +52,7 @@ const TestCases = () => {
   function getData() {
     axios
       .get(serverUrl)
-      .then(res => {
+      .then((res) => {
         setTestCaseOptions(
           res.data.map((item, i) => {
             if (Object.keys(item).length === 0) return;
@@ -61,12 +61,12 @@ const TestCases = () => {
               description: item.description,
               preConditions: item.preConditions,
               postConditions: item.postConditions,
-              index: i + 1
+              index: i + 1,
             };
           })
         );
       })
-      .catch(err => {
+      .catch((err) => {
         if (err.name === "AbortError") console.log("Successfully aborted.");
         else console.log(err);
       });
@@ -81,11 +81,11 @@ const TestCases = () => {
     if (currentIndex === 0) return;
     axios
       .post(`${serverUrl}/${testCaseOptions[currentIndex - 1].id}/run`)
-      .then(res => {
+      .then((res) => {
         console.log(res);
         console.log(res.data);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   }
@@ -109,7 +109,7 @@ const TestCases = () => {
     setCanEdit(true);
   }, []);
 
-  const selectIndex = useCallback(selectedIndex => {
+  const selectIndex = useCallback((selectedIndex) => {
     setCurrentIndex(selectedIndex);
   }, []);
 
@@ -130,15 +130,13 @@ const TestCases = () => {
     return x || y;
   }
 
+  useEffect(() => {
+    rebuildToolTip();
+  }, []);
+
   return (
     <div>
-      <form
-        className="form"
-        onLoad={() => {
-          rebuildToolTip();
-        }}
-        onSubmit={e => runTestCase(e)}
-      >
+      <form className="form" onSubmit={(e) => runTestCase(e)}>
         <span className="span">
           <label style={{ textAlign: "right" }}>
             <span style={{ margin: "auto calc((50% - 7em) / 1.4) auto auto" }}>
@@ -151,7 +149,7 @@ const TestCases = () => {
               data-for="view"
               className="not-button"
               style={{ color: "#fad039" }}
-              onClick={e => {
+              onClick={(e) => {
                 e.preventDefault();
                 setShowModal(
                   true && currentIndex != 0 && testCaseOptions.length > 0
@@ -173,7 +171,7 @@ const TestCases = () => {
               data-for="add"
               className="not-button"
               style={{ color: "#4ac746" }}
-              onClick={e => {
+              onClick={(e) => {
                 e.preventDefault();
                 setShowModal(true);
                 setCanEdit(true);
@@ -193,7 +191,7 @@ const TestCases = () => {
               data-for="delete"
               className="not-button"
               style={{ color: "#8a2516" }}
-              onClick={e => {
+              onClick={(e) => {
                 e.preventDefault();
                 deleteTestCase();
               }}
@@ -224,7 +222,7 @@ const TestCases = () => {
               data-for="refresh"
               className="not-button"
               style={{ color: "#3183e0" }}
-              onClick={e => {
+              onClick={(e) => {
                 e.preventDefault();
                 getData();
               }}
@@ -239,7 +237,7 @@ const TestCases = () => {
           <select
             required
             value={device}
-            onChange={e => setDevice(e.target.value)}
+            onChange={(e) => setDevice(e.target.value)}
           >
             {deviceOptions.map((item, i) => {
               return (
@@ -281,5 +279,5 @@ const TestCases = () => {
 };
 
 export default withAuthenticationRequired(TestCases, {
-  onRedirecting: () => <Loading />
+  onRedirecting: () => <Loading />,
 });

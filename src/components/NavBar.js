@@ -2,10 +2,10 @@ import "./css/NavBar.css";
 import LeftNav from "./LeftNav";
 import RightNav from "./RightNav";
 import CenterNav from "./CenterNav";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import React from "react";
 
-const NavBar = props => {
+const NavBar = (props) => {
   const [path, setPath] = useState(window.location.pathname);
   let tempPath = "";
 
@@ -16,12 +16,12 @@ const NavBar = props => {
     if (path !== tempPath) setPath(tempPath);
   }
 
+  useEffect(() => {
+    pathHandler();
+  }, []);
+
   return (
-    <div
-      className="topnav"
-      onLoad={() => pathHandler()}
-      onClick={() => pathHandler()}
-    >
+    <div className="topnav" onClick={() => pathHandler()}>
       <LeftNav batonpass={props} path={path} />
       <CenterNav path={path} />
       <RightNav />

@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
 
-const TestCaseModal = props => {
+const TestCaseModal = (props) => {
   TestCaseModal.propTypes = {
     index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
     options: PropTypes.arrayOf(
@@ -15,14 +15,14 @@ const TestCaseModal = props => {
         description: PropTypes.string,
         preConditions: PropTypes.string,
         postConditions: PropTypes.string,
-        index: PropTypes.number.isRequired
+        index: PropTypes.number.isRequired,
       }).isRequired
     ).isRequired,
     isNewCase: PropTypes.bool.isRequired,
     show: PropTypes.bool.isRequired,
     edit: PropTypes.bool.isRequired,
     canEdit: PropTypes.func.isRequired,
-    canClose: PropTypes.func.isRequired
+    canClose: PropTypes.func.isRequired,
   };
 
   const [desc, setDesc] = useState("");
@@ -43,17 +43,17 @@ const TestCaseModal = props => {
   const data = {
     description: desc,
     preConditions: preCond,
-    postConditions: postCond
+    postConditions: postCond,
   };
 
   function postData() {
     axios
       .post(serverUrl, data)
-      .then(res => {
+      .then((res) => {
         console.log(res);
         console.log(res.data);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   }
@@ -62,11 +62,11 @@ const TestCaseModal = props => {
     if (props.index === 0) return;
     axios
       .put(`${serverUrl}/${props.options[props.index - 1].id}`, data)
-      .then(res => {
+      .then((res) => {
         console.log(res);
         console.log(res.data);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   }
@@ -88,20 +88,18 @@ const TestCaseModal = props => {
     props.canClose();
   }
 
+  useEffect(() => {
+    rebuildToolTip();
+  }, []);
+
   if (!props.show) return null;
 
   return (
     <div className="modalpane">
-      <form
-        className="modal"
-        onLoad={() => {
-          rebuildToolTip();
-        }}
-        onSubmit={e => formHandler(e)}
-      >
+      <form className="modal" onSubmit={(e) => formHandler(e)}>
         <button
           className="not-button closebutton"
-          onClick={e => {
+          onClick={(e) => {
             e.preventDefault();
             props.canClose();
           }}
@@ -130,7 +128,7 @@ const TestCaseModal = props => {
           required
           value={desc}
           disabled={!props.edit}
-          onChange={e => setDesc(e.target.value)}
+          onChange={(e) => setDesc(e.target.value)}
         />
 
         {/* Pre-Conditions */}
@@ -140,7 +138,7 @@ const TestCaseModal = props => {
           required
           value={preCond}
           disabled={!props.edit}
-          onChange={e => setPreCond(e.target.value)}
+          onChange={(e) => setPreCond(e.target.value)}
         />
 
         {/* Post-Conditions */}
@@ -150,7 +148,7 @@ const TestCaseModal = props => {
           required
           value={postCond}
           disabled={!props.edit}
-          onChange={e => setPostCond(e.target.value)}
+          onChange={(e) => setPostCond(e.target.value)}
         />
 
         {props.edit ? (
@@ -177,9 +175,9 @@ const TestCaseModal = props => {
               style={{
                 color: "#fad039",
                 fontSize: "2em",
-                margin: "0.2em auto"
+                margin: "0.2em auto",
               }}
-              onClick={e => {
+              onClick={(e) => {
                 e.preventDefault();
                 props.canEdit();
               }}
