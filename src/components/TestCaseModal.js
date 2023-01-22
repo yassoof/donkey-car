@@ -29,7 +29,7 @@ const TestCaseModal = (props) => {
   const [preCond, setPreCond] = useState("");
   const [postCond, setPostCond] = useState("");
 
-  const serverUrl = "https://donkey-car.herokuapp.com/test-cases";
+  const serverUrl = "https://donkey-car-server.onrender.com/test-cases";
 
   useEffect(() => {
     if (props.show && !props.isNewCase && props.index != 0) {

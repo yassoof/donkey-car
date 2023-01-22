@@ -14,7 +14,7 @@ const Home = () => {
       window.history.pushState(
         window.state,
         window.title,
-        "https://donkeycar.herokuapp.com/donkey-car"
+        "https://donkey-car.onrender.com/donkey-car"
       );
   }, []);
 

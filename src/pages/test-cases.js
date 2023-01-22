@@ -16,7 +16,7 @@ const TestCases = () => {
   const [canEdit, setCanEdit] = useState(false);
   const [newCase, setNewCase] = useState(canEdit);
 
-  const serverUrl = "https://donkey-car.herokuapp.com/test-cases";
+  const serverUrl = "https://donkey-car-server.onrender.com/test-cases";
   const controller = new AbortController();
 
   const [testCaseOptions, setTestCaseOptions] = useState([
@@ -45,7 +45,7 @@ const TestCases = () => {
       window.history.pushState(
         window.state,
         window.title,
-        "https://donkeycar.herokuapp.com/donkey-car/test-cases"
+        "https://donkey-car.onrender.com/donkey-car/test-cases"
       );
   }, []);
 
